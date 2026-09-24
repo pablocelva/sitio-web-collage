@@ -1,0 +1,98 @@
+---
+import Badge from '../ui/Badge.astro';
+import type { StatementData } from '@/lib/schemas/statement.schema';
+
+interface Props {
+  statement: StatementData;
+}
+
+const { statement } = Astro.props;
+---
+
+<section id="statement" class="section-padding statement-section" aria-label="Statement conceptual de la artista">
+  <div class="container">
+    <div class="section-header text-center">
+      <Badge variant="terracotta">Manifiesto & Poética</Badge>
+      <h2>Statement Artístico</h2>
+    </div>
+
+    <div class="statement-wrapper">
+      <blockquote class="statement-quote">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <p class="quote-text">{statement.quote}</p>
+      </blockquote>
+
+      <div class="statement-body">
+        {statement.paragraphs.map((paragraph) => (
+          <p class="statement-paragraph">{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .statement-section {
+    background-color: var(--bg-primary);
+  }
+
+  .text-center {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .statement-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .statement-quote {
+    position: relative;
+    padding: 2.5rem 3rem;
+    background-color: var(--bg-subtle);
+    border-left: 3px solid var(--accent-primary);
+    border-radius: 4px;
+    margin-bottom: 3rem;
+  }
+
+  .quote-mark {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-family: var(--font-serif);
+    font-size: 5rem;
+    color: var(--accent-primary);
+    opacity: 0.25;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .statement-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .statement-paragraph {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .statement-quote {
+      padding: 1.75rem 1.5rem;
+    }
+  }
+</style>
+

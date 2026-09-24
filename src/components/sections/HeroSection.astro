@@ -1,0 +1,152 @@
+---
+import Button from '../ui/Button.astro';
+import type { BioData } from '@/lib/schemas/bio.schema';
+
+interface Props {
+  bio: BioData;
+}
+
+const { bio } = Astro.props;
+---
+
+<section id="hero" class="hero-section" aria-label="Introducción del estudio">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <span class="hero-badge">Estudio de Collage Análogo</span>
+      <h1 class="hero-title">{bio.name}</h1>
+      <p class="hero-subtitle">{bio.title}</p>
+      <p class="hero-summary">{bio.bio_summary}</p>
+
+      <div class="hero-actions">
+        <Button href="#series" variant="primary" size="lg">
+          Ver Series de Collage
+        </Button>
+        <Button href="#talleres" variant="outline" size="lg">
+          Próximos Talleres
+        </Button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="frame-container">
+        <img
+          src="/placeholder-collage-1.svg"
+          alt="Obra emblemática de collage análogo por Mila González"
+          class="hero-image"
+          width="600"
+          height="750"
+          loading="eager"
+        />
+        <div class="frame-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+    background-color: var(--bg-primary);
+    position: relative;
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+    background-color: var(--accent-soft);
+    padding: 0.35rem 0.85rem;
+    border-radius: 2px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-summary {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .frame-container {
+    position: relative;
+    max-width: 460px;
+    width: 100%;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+    border: 1px solid var(--border-light);
+    position: relative;
+    z-index: 2;
+  }
+
+  .frame-accent {
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--accent-primary);
+    opacity: 0.3;
+    z-index: 1;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+
+    .frame-container {
+      max-width: 380px;
+      margin: 0 auto;
+    }
+  }
+</style>
+

@@ -1,0 +1,41 @@
+---
+import { buildSeoMeta, DEFAULT_SEO, type SeoConfig } from '@/lib/seo';
+
+interface Props extends SeoConfig {
+  jsonLd?: string;
+}
+
+const { title, description, canonical, ogImage, ogType, noindex, jsonLd } = Astro.props;
+
+const meta = buildSeoMeta({ title, description, canonical, ogImage, ogType, noindex });
+---
+
+<!-- Primary Meta Tags -->
+<title>{meta.title}</title>
+<meta name="title" content={meta.title} />
+<meta name="description" content={meta.description} />
+<meta name="author" content={DEFAULT_SEO.author} />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+{meta.noindex && <meta name="robots" content="noindex, nofollow" />}
+<link rel="canonical" href={meta.canonical} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={meta.ogType} />
+<meta property="og:url" content={meta.canonical} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
+<meta property="og:image" content={meta.ogImage} />
+<meta property="og:site_name" content={DEFAULT_SEO.siteName} />
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={meta.canonical} />
+<meta property="twitter:title" content={meta.title} />
+<meta property="twitter:description" content={meta.description} />
+<meta property="twitter:image" content={meta.ogImage} />
+<meta property="twitter:site" content={DEFAULT_SEO.twitterHandle} />
+
+<!-- JSON-LD Structured Data -->
+{jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+

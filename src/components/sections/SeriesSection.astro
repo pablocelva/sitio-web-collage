@@ -1,0 +1,158 @@
+---
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+import type { SeriesItem } from '@/lib/schemas/series.schema';
+import { getOptimizedImageUrl } from '@/lib/cloudinary';
+
+interface Props {
+  series: SeriesItem[];
+}
+
+const { series } = Astro.props;
+---
+
+<section id="series" class="section-padding series-section" aria-label="Series de collage y obras artísticas">
+  <div class="container">
+    <div class="section-header">
+      <Badge variant="sage">Portafolio Artístico</Badge>
+      <h2>Series & Obras de Collage</h2>
+      <p class="section-desc">
+        Ediciones limitadas y series conceptuales trabajadas con material impreso original de época.
+      </p>
+    </div>
+
+    <div class="series-grid">
+      {series.map((item) => (
+        <Card class="series-card">
+          <div class="card-image-wrapper">
+            <img
+              src={getOptimizedImageUrl(item.cover_image, { width: 600, height: 750, crop: 'fill' })}
+              alt={`Portada de la serie ${item.title}`}
+              class="series-cover"
+              width="600"
+              height="750"
+              loading="lazy"
+            />
+            <span class="series-year-badge">{item.year}</span>
+          </div>
+
+          <div class="card-content">
+            <div class="series-meta">
+              <span class="technique-label">{item.technique}</span>
+              {item.dimensions && <span class="dimensions-label">• {item.dimensions}</span>}
+            </div>
+
+            <h3 class="series-title">{item.title}</h3>
+            <p class="series-description">{item.description}</p>
+
+            <div class="card-footer">
+              <Button href="#contacto" variant="outline" size="sm">
+                Consultar Disponibilidad
+              </Button>
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .series-section {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3.5rem auto;
+  }
+
+  .section-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .series-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    background-color: var(--bg-subtle);
+    overflow: hidden;
+  }
+
+  .series-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+
+  .series-card:hover .series-cover {
+    transform: scale(1.03);
+  }
+
+  .series-year-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--text-primary);
+    color: var(--text-inverse);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  .card-content {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .series-meta {
+    font-size: 0.82rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .series-title {
+    font-size: 1.45rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+
+  .series-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .card-footer {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+  }
+</style>
+

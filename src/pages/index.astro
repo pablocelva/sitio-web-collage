@@ -1,0 +1,82 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import Seo from '@/components/layout/Seo.astro';
+import HeroSection from '@/components/sections/HeroSection.astro';
+import BioSection from '@/components/sections/BioSection.astro';
+import StatementSection from '@/components/sections/StatementSection.astro';
+import SeriesSection from '@/components/sections/SeriesSection.astro';
+import TalleresSection from '@/components/sections/TalleresSection.astro';
+import KitCollageSection from '@/components/sections/KitCollageSection.astro';
+import ContactoSection from '@/components/sections/ContactoSection.astro';
+
+import {
+  getBio,
+  getStatement,
+  getSeries,
+  getTalleres,
+  getKits,
+  getContactInfo,
+} from '@/lib/contentStore';
+
+import {
+  generatePersonJsonLd,
+  generateArtworksJsonLd,
+  generateEventsJsonLd,
+  generateProductsJsonLd,
+} from '@/lib/seo';
+
+import '@/styles/global.css';
+
+// Fetch all dynamic site content from repository store
+const bio = await getBio();
+const statement = await getStatement();
+const series = await getSeries();
+const talleres = await getTalleres();
+const kits = await getKits();
+const contactInfo = await getContactInfo();
+
+// Generate structured JSON-LD schemas
+const personJsonLd = generatePersonJsonLd(bio);
+const artworksJsonLd = generateArtworksJsonLd(series);
+const eventsJsonLd = generateEventsJsonLd(talleres);
+const productsJsonLd = generateProductsJsonLd(kits);
+
+const combinedJsonLd = `[${personJsonLd}, ${artworksJsonLd}, ${eventsJsonLd}, ${productsJsonLd}]`;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/placeholder-collage-1.svg" />
+    <Seo
+      title="Mila González | Portafolio de Ilustración & Collage"
+      description={bio.bio_summary}
+      ogImage={series[0]?.cover_image || '/placeholder-collage-1.svg'}
+      jsonLd={combinedJsonLd}
+    />
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- Header Navigation -->
+    <Header />
+
+    <!-- Main Semantic Content -->
+    <main id="main-content">
+      <HeroSection bio={bio} />
+      <BioSection bio={bio} />
+      <StatementSection statement={statement} />
+      <SeriesSection series={series} />
+      <TalleresSection talleres={talleres} />
+      <KitCollageSection kits={kits} />
+      <ContactoSection contactInfo={contactInfo} />
+    </main>
+
+    <!-- Footer -->
+    <Footer email={contactInfo.email} socialLinks={contactInfo.social_links} />
+  </body>
+</html>
+

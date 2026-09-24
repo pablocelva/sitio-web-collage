@@ -1,0 +1,46 @@
+---
+interface Props {
+  variant?: 'terracotta' | 'sage' | 'dark' | 'outline';
+  class?: string;
+}
+
+const { variant = 'sage', class: className = '' } = Astro.props;
+---
+
+<span class={`badge badge-${variant} ${className}`}>
+  <slot />
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .badge-terracotta {
+    background-color: var(--accent-soft);
+    color: var(--accent-primary);
+  }
+
+  .badge-sage {
+    background-color: var(--sage-soft);
+    color: var(--sage-accent);
+  }
+
+  .badge-dark {
+    background-color: var(--text-primary);
+    color: var(--text-inverse);
+  }
+
+  .badge-outline {
+    border: 1px solid var(--border-medium);
+    color: var(--text-secondary);
+  }
+</style>
+

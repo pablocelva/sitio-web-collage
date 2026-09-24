@@ -1,0 +1,160 @@
+---
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+import type { KitItem } from '@/lib/schemas/kit.schema';
+import { getOptimizedImageUrl } from '@/lib/cloudinary';
+
+interface Props {
+  kits: KitItem[];
+}
+
+const { kits } = Astro.props;
+---
+
+<section id="kit" class="section-padding kit-section" aria-label="Kit de collage y recursos creativos">
+  <div class="container">
+    <div class="section-header">
+      <Badge variant="sage">Recursos & Herramientas</Badge>
+      <h2>Kit de Collage & Materiales</h2>
+      <p class="section-desc">
+        Sets curados de papeles vintage de época, herramientas de precisión y guías digitales para recortar.
+      </p>
+    </div>
+
+    <div class="kit-grid">
+      {kits.map((kit) => (
+        <Card class="kit-card">
+          <div class="kit-image-wrapper">
+            <img
+              src={getOptimizedImageUrl(kit.image, { width: 500, height: 400, crop: 'fill' })}
+              alt={`Imagen de ${kit.title}`}
+              class="kit-cover"
+              width="500"
+              height="400"
+              loading="lazy"
+            />
+            <span class="category-badge">{kit.category}</span>
+          </div>
+
+          <div class="kit-content">
+            <div class="stock-status">
+              <Badge variant={kit.in_stock ? 'sage' : 'outline'}>
+                {kit.in_stock ? 'En Stock' : 'Agotado'}
+              </Badge>
+            </div>
+
+            <h3 class="kit-title">{kit.title}</h3>
+            <p class="kit-description">{kit.description}</p>
+
+            <div class="kit-footer">
+              <Button
+                href={kit.purchase_url}
+                variant={kit.in_stock ? 'primary' : 'ghost'}
+                size="sm"
+              >
+                {kit.in_stock ? 'Adquirir Kit' : 'Consultar Reposición'}
+              </Button>
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .kit-section {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3.5rem auto;
+  }
+
+  .section-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  .kit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .kit-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .kit-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-color: var(--bg-subtle);
+    overflow: hidden;
+  }
+
+  .kit-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+
+  .kit-card:hover .kit-cover {
+    transform: scale(1.03);
+  }
+
+  .category-badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background-color: rgba(26, 25, 24, 0.85);
+    color: var(--text-inverse);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px;
+  }
+
+  .kit-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .stock-status {
+    margin-bottom: 0.75rem;
+  }
+
+  .kit-title {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .kit-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .kit-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+  }
+</style>

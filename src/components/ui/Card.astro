@@ -1,0 +1,31 @@
+---
+interface Props {
+  class?: string;
+  bordered?: boolean;
+}
+
+const { class: className = '', bordered = true } = Astro.props;
+---
+
+<div class={`card ${bordered ? 'card-bordered' : ''} ${className}`}>
+  <slot />
+</div>
+
+<style>
+  .card {
+    background-color: var(--bg-card);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .card-bordered {
+    border: 1px solid var(--border-light);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+</style>
+

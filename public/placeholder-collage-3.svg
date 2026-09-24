@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <rect width="800" height="1000" fill="#F4F0E8"/>
+  <rect x="60" y="60" width="680" height="880" fill="#FFFFFF" stroke="#E6E1D8" stroke-width="2"/>
+  
+  <!-- Surrealist Moon & Anatomical Cutout -->
+  <circle cx="400" cy="380" r="180" fill="#D9D0C3"/>
+  <path d="M 300 200 C 450 150, 550 300, 480 500 C 400 650, 250 550, 300 200 Z" fill="#6E7E6B" opacity="0.6"/>
+  <rect x="250" y="520" width="300" height="220" fill="#C85A32" opacity="0.75" transform="rotate(-6 400 630)"/>
+  
+  <text x="400" y="910" font-family="Georgia, serif" font-size="22" fill="#1A1918" text-anchor="middle" letter-spacing="4">ANATOMÍA DE LOS SUEÑOS</text>
+</svg>
+

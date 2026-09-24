@@ -1,0 +1,26 @@
+# Build output
+dist/
+.astro/
+.netlify/
+
+# Dependency directories
+node_modules/
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.production
+.env.local
+!.env.example
+
+# Vitest Coverage output
+coverage/
+.vitest/
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+

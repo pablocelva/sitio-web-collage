@@ -1,0 +1,43 @@
+---
+import Seo from '@/components/layout/Seo.astro';
+import { AdminLoginForm } from '@/components/admin/AdminLoginForm';
+
+import '@/styles/global.css';
+
+export const prerender = false;
+
+const session = Astro.cookies.get('admin_session')?.value;
+if (session) {
+  return Astro.redirect('/admin');
+}
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <Seo title="Iniciar Sesión Admin | Mila González" noindex={true} />
+  </head>
+  <body class="login-body">
+    <main class="login-wrapper">
+      <AdminLoginForm client:load />
+    </main>
+
+    <style>
+      .login-body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bg-secondary);
+        padding: 1.5rem;
+      }
+
+      .login-wrapper {
+        width: 100%;
+        max-width: 460px;
+      }
+    </style>
+  </body>
+</html>
+
