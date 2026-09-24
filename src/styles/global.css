@@ -18,6 +18,7 @@ html {
   background-color: var(--bg-primary);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -26,6 +27,15 @@ body {
   flex-direction: column;
   background-color: var(--bg-primary);
   overflow-x: hidden;
+  width: 100%;
+  padding-top: var(--header-height);
+}
+
+/* Strict Scroll Lock when Mobile Navigation is Open */
+body.menu-open {
+  overflow: hidden !important;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 /* Accessibility Focus States */
@@ -96,7 +106,7 @@ button {
   background: var(--text-primary);
   color: var(--text-inverse);
   padding: 0.75rem 1.25rem;
-  z-index: 1000;
+  z-index: 2000;
   transition: top var(--transition-fast);
   border-radius: 4px;
 }
@@ -120,10 +130,19 @@ button {
   padding-bottom: 5rem;
 }
 
+section[id],
+[id] {
+  scroll-margin-top: calc(var(--header-height) + 0.5rem);
+}
+
 @media (max-width: 768px) {
   .section-padding {
     padding-top: 3.5rem;
     padding-bottom: 3.5rem;
   }
-}
 
+  section[id],
+  [id] {
+    scroll-margin-top: var(--header-height);
+  }
+}
